@@ -28,7 +28,7 @@
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
-                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '20px 20px 0'}" type="navicon-round" size="24"></Icon>
+                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '20px 20px 0', cursor: 'pointer'}" type="navicon-round" size="24"></Icon>
                 </Header>
                 <Content :style="{margin: '10px', padding: '10px', background: '#fff', minHeight: '260px', overflowY: 'auto'}">
                     <router-view/>
@@ -87,6 +87,9 @@
         border-radius: 4px;
         overflow: hidden;
         height: 100%;
+        i {
+            width: 10px;
+        }
         .layout-header-bar{
             background: #fff;
             box-shadow: 0 1px 1px rgba(0,0,0,.1);
