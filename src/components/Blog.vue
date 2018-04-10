@@ -64,6 +64,8 @@
                     case 'web':
                         this.md = web_md;
                         break;
+                    default:
+                        this.md = mac_md;
                 }
             }
         }

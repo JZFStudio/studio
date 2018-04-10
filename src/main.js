@@ -12,12 +12,38 @@ import '../static/style.less'
 Vue.use(Vuex);
 Vue.use(iView);
 
+const store = new Vuex.Store({});
+
+store.registerModule('app', {
+    state: {
+        status: 'init'
+    },
+    mutations: {
+        updateStatus(state, payload) {
+            state.status = payload.status;
+        }
+    }
+});
+
+router.beforeEach(function (to, from, next) {
+    iView.LoadingBar.start();
+    next();
+});
+
+router.afterEach(function (to, from) {
+    iView.LoadingBar.finish();
+    store.commit('updateStatus', {
+        status: to.path.substring(to.path.lastIndexOf('/') + 1).toUpperCase(),
+    });
+});
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+    el: '#app',
+    router,
+    store,
+    components: {App},
+    template: '<App/>'
 });

@@ -2,7 +2,7 @@
     <div class="layout">
         <Layout style="height: 100%;">
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-                <Menu active-name="1-1" theme="dark" width="auto" :class="menuitemClasses" :updateActiveName="updateItem">
+                <Menu theme="dark" width="auto" :class="menuitemClasses" ref="left_menu">
                     <div class="logo" @click="toHome">
                         <img src="../public/logo.png" alt="">
                     </div>
@@ -24,11 +24,18 @@
                             <span>Web</span>
                         </MenuItem>
                     </router-link>
+                    <router-link :to="{name: 'Game'}">
+                        <MenuItem name="1-4">
+                            <Icon type="ios-game-controller-b"></Icon>
+                            <span>Game</span>
+                        </MenuItem>
+                    </router-link>
                 </Menu>
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '20px 20px 0', cursor: 'pointer'}" type="navicon-round" size="24"></Icon>
+                    <span class="status" v-text="currentStatus"></span>
                 </Header>
                 <Content :style="{margin: '10px', padding: '10px', background: '#fff', minHeight: '260px', overflowY: 'auto'}">
                     <router-view/>
@@ -43,7 +50,8 @@
         name: "Home",
         data () {
             return {
-                isCollapsed: false
+                isCollapsed: false,
+                currentStatus: ''
             }
         },
         computed: {
@@ -64,17 +72,15 @@
             collapsedSider () {
                 this.$refs.side1.toggleCollapse();
             },
-            updateItem () {
-                this.$nextTick(function () {
-                    this.toHome();
-                })
-            },
             toHome () {
                 this.$router.replace({path: '/'});
+                this.$refs.left_menu.currentActiveName = '';
             }
         },
-        mounted: function () {
-            console.log(this.$route.params.title);
+        watch: {
+            '$route': function () {
+                this.currentStatus = this.$store.state.app.status;
+            }
         }
     }
 </script>
@@ -93,6 +99,12 @@
         .layout-header-bar{
             background: #fff;
             box-shadow: 0 1px 1px rgba(0,0,0,.1);
+            .status {
+                display: inline-block;
+                float: right;
+                margin-right: 10px;
+                font-size: 20px;
+            }
         }
         .layout-logo-left{
             width: 90%;

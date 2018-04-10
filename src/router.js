@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import HelloWorld from '@/components/HelloWorld'
 import Blog from '@/components/Blog'
+import Description from '@/components/Description'
+import Game from '@/components/Game'
+import Puzzle from '@/components/Puzzle'
 
 Vue.use(Router);
 
@@ -15,7 +17,7 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    component: Blog
+                    component: Description
                 }
             ]
         },
@@ -27,6 +29,21 @@ export default new Router({
                 {
                     path: '',
                     component: Blog
+                }
+            ]
+        },
+        {
+            path: '/game',
+            name: 'Game',
+            component: Home,
+            children: [
+                {
+                    path: '',
+                    component: Game
+                },
+                {
+                    path: 'puzzle',
+                    component: Puzzle
                 }
             ]
         },
